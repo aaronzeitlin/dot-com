@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aaron Zeitlin — analytics engineering, systems architecture, and automation.">
+  <title>Workflow orchestration — Aaron Zeitlin</title>
+  <style>
+    body { max-width: 43rem; margin: 3rem auto; padding: 0 1rem; line-height: 1.5; }
+    section { margin-top: 2.5rem; }
+    article { margin-bottom: 1.75rem; }
+    article h3 { margin-bottom: 0; }
+    article p { margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <p><a href="/">← Aaron Zeitlin</a></p>
+    <h1>Workflow orchestration</h1>
+    <p><small>Independent engineering · Ongoing · Private</small></p>
+    <p>I'm building a private system that coordinates multi-step work across software tools and automated processes. The project itself is not public; this page describes the engineering problems without disclosing its name or domain.</p>
+
+    <h2>The workflow</h2>
+    <ol>
+      <li>Discover or receive work from external inputs.</li>
+      <li>Queue bounded tasks rather than relying on a single long-running process.</li>
+      <li>Run automated processing and validation.</li>
+      <li>Separate proposed changes from independent review and approval.</li>
+      <li>Apply guarded changes, check the result, and retain enough state to investigate failures.</li>
+    </ol>
+
+    <h2>The architectural questions</h2>
+    <p>How do you resume after partial failure? How do you make retries safe? Which decisions belong to deterministic rules, and which are reasonable to delegate to a model? How do you prevent one component from approving its own output?</p>
+    <p>My focus is explicit state, idempotent operations, useful logs, and narrow interfaces between components. AI can contribute to the workflow without becoming the authority for every transition.</p>
+
+    <h2>Status</h2>
+    <p>Active independent development, with some workflows operational and others still being refined. No public demo or repository is offered. I'm happy to discuss architecture and tradeoffs in conversation.</p>
+    <p><a href="/">← All work</a></p>
+  </main>
+</body>
+</html>

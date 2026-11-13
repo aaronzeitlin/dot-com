@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Aaron Zeitlin — technical analytics, systems architecture, and automation.">
+  <meta name="description" content="Side projects by Aaron Zeitlin.">
   <title>Aaron Zeitlin</title>
   <style>
     body {
@@ -18,10 +18,19 @@
   <main>
     <h1>Aaron Zeitlin</h1>
 
-    <p>I build systems that make complex work simpler.</p>
-
     <h2>Projects</h2>
-    <p>Project details coming soon.</p>
+
+    <h3>Home Lab</h3>
+    <p>A self-hosted environment for home automation, small applications, and AI workflow experiments. The lab supports both ongoing household services and short-lived experiments. Backups and recovery are part of operating the long-running services.</p>
+
+    <h3>Jonah Frame</h3>
+    <p>An always-on web application running on a repurposed touchscreen photo frame. A deterministic schedule engine evaluates recurring routines and date-specific overrides, then supplies the current and upcoming activities to the display. A separate module handles environmental data. Sunset can change the sky independently of the bedtime indicator, and ferry motion requires a fresh position report.</p>
+    <p>The scene uses a static backdrop and separate sprites for moving objects. Reflections that belong to the ferry move with the ferry sprite. The renderer updates only the parts of the interface whose state changed, keeping active touch targets in place while the clock updates.</p>
+    <p>The touchscreen uses a read-only session. A separate parent interface manages routines, calendar events, and photos. The calculator and letter board hold input only for the current interaction.</p>
+
+    <h3>Crateflip</h3>
+    <p>An archived music software prototype. The initial design explored beat discovery modeled on digging through records. A later iteration narrowed the public page to one featured track and a set of links per artist, with previous tracks retained in an archive.</p>
+    <p>PostgreSQL stored profile and track metadata, while audio files used a separate storage interface. That interface supported local files during development and S3-compatible object storage for deployment. The prototype is offline.</p>
 
     <h2>Elsewhere</h2>
     <p><a href="https://www.linkedin.com/in/aaron-zeitlin">LinkedIn</a> &middot; <a href="https://github.com/aaronzeitlin">GitHub</a></p>

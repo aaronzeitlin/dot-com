@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="The architecture, consolidation, and reduction of a self-hosted home lab.">
+  <title>Home Lab | Aaron Zeitlin</title>
+  <style>
+    body {
+      max-width: 42rem;
+      margin: 4rem auto;
+      padding: 0 1rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p><a href="./#home-lab">Projects</a></p>
+
+    <h1>Home Lab</h1>
+    <p>Home Lab brought household automation and self-hosted applications onto one system. It grew to include shared infrastructure for building and releasing those applications, plus a separate system for coordinating AI-assisted software work. The lab now runs with a much smaller operating footprint. A repository migration eliminated cross-repository release coordination for the core services. A later reduction cut the tooling and services that required ongoing maintenance.</p>
+
+    <h2>Buildout</h2>
+    <p>Docker Compose defined the runtime. Applications had their own service boundaries, with shared infrastructure for access, deployment, logs, and metrics. A lightweight event bus stored events in SQLite and offered both polling and a live stream. Consumers could replay from the durable store after a disconnect. Services that needed an immediate response could still call each other directly.</p>
+    <p>The lab also developed a system for dispatching coding agents. An early runner selected one issue at a time from an operator-approved allowlist, checked prerequisites, and dispatched work in an isolated checkout. A dry run reported which checks would block dispatch. Later, a SQLite ledger consolidated dispatch, session, and resume state that had been spread across mutable files. By August 2026, the command-line tooling and agent SDK together accounted for roughly 126,000 lines in the repository's inventory.</p>
+
+    <h2>Repository and release model</h2>
+    <p>Applications initially lived in separate repositories and entered the lab as Git submodules. The same checkouts participated in one package workspace with a shared lockfile. A service could merge while the lab still pinned an older commit, so a deploy could reproduce the wrong revision exactly. An incomplete submodule checkout could also drop packages from the shared lockfile and break a later frozen install.</p>
+    <p>In July 2026, six repositories were folded into the monorepo in stages. The imports preserved their Git history and existing workspace paths. The migration checked that the lockfile still covered the same workspace packages, and the old pointer automation was removed after a normal release went through the new path. That let one Git revision identify the source used for the build. The deploy command checks that revision on the running containers, including the paired frontend where applicable. An endpoint can respond successfully while serving an older build.</p>
+
+    <h2>Reduction</h2>
+    <p>Several experimental services were retired in July 2026. In August, the scope narrowed to services the household relied on, tools that helped protect it, and applications that still saw use. One change removed roughly 156,000 lines of agent operations and repository tooling across more than 1,200 files. Other changes replaced the central documentation corpus with a single operations runbook and removed custom monitoring wrappers.</p>
+    <p>One example was a custom home-automation health check that parsed logs and displayed a persistent warning. The native integration already reported when it was unavailable, so the extra sensor and dashboard warning were removed. Standard service probes, metrics, and log collection stayed. An independent uptime monitor served a different purpose by checking that the main system and its alert path were reachable from outside the host.</p>
+
+    <h2>Current operating scope</h2>
+    <p>The remaining lab centers on home automation, camera recording, monitoring, recovery, and a small number of applications. Normal releases go through one deploy command. Image builds can run on a separate worker using a clean source archive. Persistent data and deployment authority stay with the runtime, so the build worker can be replaced without a data restore.</p>
+    <p>Encrypted off-site backups cover persistent volumes and database snapshots. The SQLite backup path uses the database's online backup API to take a consistent copy while the database is in use. A restore drill unpacks a snapshot into temporary storage, checks recovered databases, and validates restored application configuration in an isolated container. Routine backup checks and restore checks provide different evidence about what can be recovered.</p>
+  </main>
+</body>
+</html>

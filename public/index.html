@@ -21,8 +21,8 @@
     <h2>Projects</h2>
 
     <h3 id="home-lab">Home Lab</h3>
-    <p>A self-hosted environment for home automation, small applications, and AI workflow experiments. Docker Compose defines the services. The deploy command can update a single service or the shared infrastructure. A release check compares the revision on the running containers with the intended Git commit. A container can be healthy while still running an older build.</p>
-    <p>Encrypted off-site backups capture persistent volumes and database snapshots. The recovery tooling restores a snapshot to temporary storage, checks recovered databases, and validates application configuration in an isolated container. That exercises part of recovery without taking live services offline.</p>
+    <p>Home Lab combined household infrastructure with a platform for self-hosted applications and AI workflow experiments. Its largest iteration included shared application tooling and a custom system for dispatching coding agents. It now operates with a much smaller footprint, centered on household services, a small set of applications, and the tooling needed to maintain and recover them.</p>
+    <p>The <a href="home-lab.html">Home Lab technical writeup</a> covers the buildout, the repository migration, and the decisions behind the reduction.</p>
 
     <h3 id="jonah-frame">Jonah Frame</h3>
     <p>An always-on web app for a repurposed 1280 × 800 touchscreen photo frame. The primary screen shows what is happening now and what comes next for a child who cannot yet read. The schedule engine derives that sequence from recurring activities and date-specific overrides. It distinguishes exact times, approximate times, and untimed events, so an activity with no start time can appear without creating a false countdown. Wake and bedtime cues follow the routine even when the illustrated sky changes with the actual sunset.</p>

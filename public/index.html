@@ -20,17 +20,19 @@
 
     <h2>Projects</h2>
 
-    <h3>Home Lab</h3>
-    <p>A self-hosted environment for home automation, small applications, and AI workflow experiments. The lab supports both ongoing household services and short-lived experiments. Backups and recovery are part of operating the long-running services.</p>
+    <h3 id="home-lab">Home Lab</h3>
+    <p>A self-hosted environment for home automation, small applications, and AI workflow experiments. Docker Compose defines the services. The deploy command can update a single service or the shared infrastructure. A release check compares the revision on the running containers with the intended Git commit. A container can be healthy while still running an older build.</p>
+    <p>Encrypted off-site backups capture persistent volumes and database snapshots. The recovery tooling restores a snapshot to temporary storage, checks recovered databases, and validates application configuration in an isolated container. That exercises part of recovery without taking live services offline.</p>
 
-    <h3>Jonah Frame</h3>
-    <p>An always-on web application running on a repurposed touchscreen photo frame. A deterministic schedule engine evaluates recurring routines and date-specific overrides, then supplies the current and upcoming activities to the display. A separate module handles environmental data. Sunset can change the sky independently of the bedtime indicator, and ferry motion requires a fresh position report.</p>
-    <p>The scene uses a static backdrop and separate sprites for moving objects. Reflections that belong to the ferry move with the ferry sprite. The renderer updates only the parts of the interface whose state changed, keeping active touch targets in place while the clock updates.</p>
-    <p>The touchscreen uses a read-only session. A separate parent interface manages routines, calendar events, and photos. The calculator and letter board hold input only for the current interaction.</p>
+    <h3 id="jonah-frame">Jonah Frame</h3>
+    <p>An always-on web app for a repurposed 1280 × 800 touchscreen photo frame. The primary screen shows what is happening now and what comes next for a child who cannot yet read. The schedule engine derives that sequence from recurring activities and date-specific overrides. It distinguishes exact times, approximate times, and untimed events, so an activity with no start time can appear without creating a false countdown. Wake and bedtime cues follow the routine even when the illustrated sky changes with the actual sunset.</p>
+    <p>The waterfront scene combines a fixed backdrop with independently animated objects. A fresh vessel position can drive the painted ferry. When the feed goes stale or the vessel docks, the ferry eases from its last rendered position into decorative motion. An earlier implementation hid it during those gaps, causing it to blink in and out as the feed refreshed. The night reflection was also moved off the background and attached to the ferry so both follow the same animation.</p>
+    <p>The frame updates the clock every second and rebuilds other regions only when their inputs change. That keeps touch targets in place on the older Android WebView. The calculator and letter board use temporary local state and clear on dismissal. A separate parent interface writes routine and photo changes. The Cloudflare Worker enforces read-only access for the frame and checks photo visibility again when an image is requested, so hiding a photo also revokes access through its direct URL.</p>
 
-    <h3>Crateflip</h3>
-    <p>An archived music software prototype. The initial design explored beat discovery modeled on digging through records. A later iteration narrowed the public page to one featured track and a set of links per artist, with previous tracks retained in an archive.</p>
-    <p>PostgreSQL stored profile and track metadata, while audio files used a separate storage interface. That interface supported local files during development and S3-compatible object storage for deployment. The prototype is offline.</p>
+    <h3 id="crateflip">Crateflip</h3>
+    <p>An archived prototype that explored two ways for producers to share music. The first iteration modeled beat discovery on digging through records, with artist pages, searchable track metadata, and audio previews. A Next.js frontend and an Express API shared schemas for their data contracts.</p>
+    <p>In that version, uploads began with a private draft record and a short-lived signed URL. The browser sent the audio directly to object storage. The API checked ownership and confirmed that the file existed before the record could become public. A stable playback route issued fresh signed URLs, keeping a shared track address usable after an individual storage URL expired.</p>
+    <p>The later iteration focused on a shareable artist page with links and a single featured track. PostgreSQL enforced one active track per profile. When a track was replaced, the prior record was written to history in the same database transaction as the profile update. Audio lived in separate storage, so a failed database update required a separate cleanup step for newly uploaded files. The prototype is offline.</p>
 
     <h2>Elsewhere</h2>
     <p><a href="https://www.linkedin.com/in/aaron-zeitlin">LinkedIn</a> &middot; <a href="https://github.com/aaronzeitlin">GitHub</a></p>
